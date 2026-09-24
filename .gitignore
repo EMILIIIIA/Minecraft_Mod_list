@@ -1,12 +1,9 @@
-
-gitignore
 # 忽略所有文件和目录
 *
-# 但保留 .gitignore 和 .gitattributes
+# 保留 .gitignore 和 .gitattributes 本身
 !.gitignore
 !.gitattributes
-# 允许 mods 目录及其子目录
-!mods/
-!mods/**/
-# 只允许 mods 下的 .jar 文件
-!mods/**/*.jar
+# 允许所有目录及其子目录
+!*/
+# 允许所有 .jar 文件
+!*.jar
