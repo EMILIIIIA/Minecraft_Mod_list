@@ -1,0 +1,22 @@
+ysm.in_shield_block_cooldown ? {
+    v.deftime = v.deftime + 1;
+    v.deftime == 1 ? {
+        v.rand = math.random(1, 3);
+        v.rand > 2 ? {
+            ysm.play_sound('def1', 'def1', true);
+        } : {
+            ysm.play_sound('def2', 'def2', true);
+        };
+
+        ctrl.indicate_reload();
+    };
+    ctrl.set_animation('PefectDef');
+    return ctrl.state_continue;
+};
+q.all_animations_finished ? {
+    ctrl.indicate_reload();
+    v.deftime = 0;
+    return ctrl.state_bypass;
+};
+v.deftime = 0;
+return ctrl.state_bypass;

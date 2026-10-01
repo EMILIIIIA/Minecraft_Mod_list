@@ -1,0 +1,64 @@
+v.musicgame ? {
+    ctrl.set_beginning_transition_length(0);
+    //输入逻辑
+    v.keyboardJ = v.keyboardJ * (ysm.keyboard(59) || ysm.keyboard(75)) + (ysm.keyboard(59) || ysm.keyboard(75)) / ysm.fps;
+    v.keyboardK = v.keyboardK * (ysm.keyboard(74) || ysm.keyboard(39)) + (ysm.keyboard(74) || ysm.keyboard(39)) / ysm.fps;
+
+    //双压判定
+    v.keyboardJ > 0 && v.keyboardJ < 0.05 && v.keyboardK > 0 && v.keyboardK < 0.05 ? {
+        ctrl.indicate_reload();
+    };
+    v.keyboardJ > 0 && v.keyboardJ < 0.5 && v.keyboardK > 0 && v.keyboardK < 0.5  ? {
+        v.keyboardJ < 0.03 && v.keyboardK < 0.03 ? {
+            ctrl.set_animation('AttackMid');
+            ysm.play_sound('swingsword', 'swingsword', true);
+        };
+        return ctrl.state_continue;
+    };
+
+    //攻击地面
+    v.keyboardJ > 0.02 && v.keyboardJ < 0.05 ?{
+        ctrl.indicate_reload();
+    };
+    v.keyboardJ > 0.02 && v.keyboardJ < 0.5  ? {
+        v.attackStage == 2 ? {
+            v.keyboardJ < 0.03 ? {
+                ctrl.set_animation('Attackdown2');
+                ysm.play_sound('swingsword', 'swingsword', true);
+            };
+        } : {
+            v.keyboardJ < 0.03 ? {
+                ctrl.set_animation('Attackdown');
+                ysm.play_sound('swingswordtwo', 'swingswordtwo', true);
+            };
+        };
+        return ctrl.state_continue;
+    };
+
+    //攻击空中
+    v.keyboardK > 0.02 && v.keyboardK < 0.05 ?{
+        ctrl.indicate_reload();
+    };
+    v.keyboardK > 0.02 && v.keyboardK < 0.5  ? {
+        v.attackStage ==  2 ? {
+            v.keyboardK < 0.03 ? {
+                ctrl.set_animation('Attackup2');
+                ysm.play_sound('swingsword', 'swingsword', true);
+            };
+        } : {
+            v.keyboardK < 0.03 ? {
+                ctrl.set_animation('Attackup');
+                ysm.play_sound('swingswordtwo', 'swingswordtwo', true);
+            };
+        };
+        return ctrl.state_continue;
+    };
+    v.attacking == 0 ? {
+        ctrl.set_animation('musicRun');
+        return ctrl.state_continue;
+    };
+    return ctrl.state_continue;
+} : {
+    ctrl.set_beginning_transition_length(0.1);
+    return ctrl.state_bypass;
+};

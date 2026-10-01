@@ -7,3 +7,6 @@
 !*/
 # 允许所有 .jar 文件
 !*.jar
+# 允许 Modules 文件夹下所有文件（递归）
+!Modules/
+!Modules/**
